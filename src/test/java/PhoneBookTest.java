@@ -1,16 +1,24 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
-public class JUnitTest {
+public class PhoneBookTest {
 
 //    @BeforeEach //@AfterEach - запуск перед/после каждого теста
 //    @RepeatedTest(3) - запуск метода 3 раза
 //    @BeforeAll //@AfterAll - запуск перед/после всех тестов
 
     private final Calculator calc = Calculator.instance.get();
+
+    @ParameterizedTest
+    @ValueSource(ints = {1,2,3,4,5})
+    public void testParam(int argument) {
+        Assertions.assertNotNull(calc.pow.apply(argument));
+    }
 
     @Test
     public void testString() {
@@ -50,9 +58,11 @@ public class JUnitTest {
     @Test
     public void testSum_Calculator() {
         //arrange
-        Integer a = 3, b = 2, expected = 5;
+        Integer given = 3;
+        Integer when = 2;
+        Integer expected = 5;
         //act
-        Integer result = calc.plus.apply(a, b);
+        Integer result = calc.plus.apply(given, when);
         //assert
         Assertions.assertEquals(result, expected);
     }
